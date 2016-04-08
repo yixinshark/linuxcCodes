@@ -82,3 +82,46 @@ curl http://slynux.org -o index.html --progress #可以执行，--progress表示
 curl -T localfile ftp://192.168.0.17/tmp/ #注意tmp后面的/
 #上传同类型的文件
 find . -name "frame_*" -exec curl -T {} ftp://****/
+
+
+#对文件进行归档：
+#----------------------------------tar------------------tar 为对文件归档
+tar -cvf output.tar [source file list]
+#当对已归档的文件output.tar需要添加一个文件时，用-r参数
+tar -rvf output.tar new_file #只对归档文件有效，对压缩文件会报错
+#用下面的方法列出归档文件中的内容
+tar -tf output.tar #-t　表示list
+#verbose -v 表示详细
+
+#提取归档文件
+tar -xvf archive.tar -C /path/to/extraction_directory #-C 表示指定要提取归档文件到制定目录，没有表示当前目录下
+
+#合并两个归档文件，即合并file1.tar 和file2.tar两个文件
+tar -Af file1.tar file2.tar #可以查看是否成功tar -tf file1.tar
+
+#对归档文件进行压缩-----gzip------
+#方法１:　使用-z
+tar -czvf archive.tar.gz [files] #或者 
+tar -cavf archive.tar.gz [files] #-a 表示指定从文件扩展名自动判断压缩格式
+#方法２:先归档再进行压缩，因为gzip只能对单一文件压缩，当有很多文件的时候，我们一般选择归档，然后再压缩，或者使用方法１
+tar -cvf archive.tar [files]
+gzip archive.tar
+
+#解压缩
+#需要对gzip压缩的归档文件中的文件提取时，使用-x 表示用于提取内容，-z表示使用的gzip格式
+tar -xavf archive.tar.gz -C extraction_directory #-a表示用于自动检测压缩格式
+#或者
+tar -xzvf archive.tar.gz
+
+#使用bzip2进行压缩-------bzip2------与tar结合使用-j, lzma压缩，使用--lzma，最好使用-a,自动识别，其后缀archive.tar.lzma
+tar -cjvf archive.tar.bz2 [files]
+tar -cavf archive.tar.bz2 [files]
+#方法２;
+tar -cvf archive.tar [files]
+bzip2 archive.tar
+
+#解压缩:
+tar -xjvf archive.tar.bz2 -C extraction_directory #或者使用 -xavf,感觉这个比较智能，对lzma压缩也可以类似，指定-cavf ,-xavf,万能。
+
+
+
