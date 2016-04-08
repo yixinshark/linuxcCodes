@@ -66,3 +66,19 @@ echo $result
 echo 'alias install ="sudo apt-get install"' >> .bashrc # >> 为在末尾追加，>表示覆盖
 source .bashrc
 #----------------------------------------------------------
+
+#全局查找替换两种方法---------sed------
+sed -i 's/text/replace/g' fileName #g表示全局替换,在终端执行。
+#另外一种方式:在vim命令行下:%s/text/replace/gc
+
+#下载文件----------wget----------curl------
+wget ftp://example_domain.com/somefile.img -o dloaded_file.img
+
+wget URL -c --timeout 15 #-c 指定从断点继续下载，--time -n 表示超时继续下载。
+
+curl http://slynux.org -o index.html --progress #可以执行，--progress表示打印下载进度
+
+#往ftp服务器上传东西的时候：
+curl -T localfile ftp://192.168.0.17/tmp/ #注意tmp后面的/
+#上传同类型的文件
+find . -name "frame_*" -exec curl -T {} ftp://****/
