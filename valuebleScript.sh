@@ -83,6 +83,10 @@ curl -T localfile ftp://192.168.0.17/tmp/ #注意tmp后面的/
 #上传同类型的文件
 find . -name "frame_*" -exec curl -T {} ftp://****/
 
+#按照列来检索文件：------------------------awk------------------
+awk -F":" '{print $1}' /etc/password #检索password文件中第一列文件，以：为分割符
+awk -F":" '{print $1 "\t" $3}' /etc/password #第一列和第三列
+awk -F":" '$3>500 {print $1 "\t" $3}' /etc/Password #检索第三列数值大于500的
 
 #对文件进行归档：
 #----------------------------------tar------------------tar 为对文件归档
